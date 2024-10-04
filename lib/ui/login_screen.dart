@@ -6,16 +6,35 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          const Text("Sistema de Gestão de Contas"),
-          TextFormField(),
-          TextFormField(),
-          ElevatedButton(
-            onPressed: () {},
-            child: const Text("Entrar"),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              "Sistema de Gestão de Contas",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 32,
+              ),
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                label: Text("E-mail"),
+              ),
+            ),
+            TextFormField(
+              obscureText: true,
+              decoration: const InputDecoration(
+                label: Text("Senha"),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text("Entrar"),
+            ),
+          ],
+        ),
       ),
     );
   }
