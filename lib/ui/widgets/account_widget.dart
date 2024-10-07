@@ -16,8 +16,24 @@ class AccountWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${account.name} ${account.lastName}",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text("ID: ${account.id}"),
+              Text("Saldo: ${account.balance.toStringAsFixed(2)}"),
+              Text("Tipo: ${account.accountType ?? "Sem tipo definido."}"),
+            ],
+          ),
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.settings),
