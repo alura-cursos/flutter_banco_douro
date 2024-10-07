@@ -5,6 +5,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFF0F0F0),
+        title: const Text("Sistema de gestão de contas"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, "login");
+            },
+            icon: const Icon(Icons.logout),
+          )
+        ],
+      ),
+    );
   }
 }
