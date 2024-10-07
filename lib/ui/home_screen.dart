@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_banco_douro/models/account.dart';
+import 'package:flutter_banco_douro/services/account_service.dart';
 import 'package:flutter_banco_douro/ui/widgets/account_widget.dart';
 import 'styles/colors.dart';
 
@@ -23,14 +24,22 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: AccountWidget(
-          account: Account(
-            id: "ID001",
-            name: "Ricarth",
-            lastName: "Lima",
-            balance: 200,
-            accountType: null,
-          ),
+        child: FutureBuilder(
+          future: AccountService().getAll(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return const Center(child: CircularProgressIndicator());
+              case ConnectionState.waiting:
+                return const Center(child: CircularProgressIndicator());
+              case ConnectionState.active:
+                return const Center(child: CircularProgressIndicator());
+              case ConnectionState.done:
+                {
+                  return const Text("A operação acabou");
+                }
+            }
+          },
         ),
       ),
     );
