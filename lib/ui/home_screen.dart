@@ -4,11 +4,20 @@ import 'package:flutter_banco_douro/services/account_service.dart';
 import 'package:flutter_banco_douro/ui/widgets/account_widget.dart';
 import 'styles/colors.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  Future<List<Account>> refreshGetAll() async {
-    return AccountService().getAll();
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  Future<List<Account>> _futureGetAll = AccountService().getAll();
+
+  Future<void> refreshGetAll() async {
+    setState(() {
+      _futureGetAll = AccountService().getAll();
+    });
   }
 
   @override
@@ -31,7 +40,7 @@ class HomeScreen extends StatelessWidget {
         child: RefreshIndicator(
           onRefresh: refreshGetAll,
           child: FutureBuilder(
-            future: AccountService().getAll(),
+            future: _futureGetAll,
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
