@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_banco_douro/ui/styles/colors.dart';
 
-class AddAccountModal extends StatelessWidget {
+class AddAccountModal extends StatefulWidget {
   const AddAccountModal({super.key});
+
+  @override
+  State<AddAccountModal> createState() => _AddAccountModalState();
+}
+
+class _AddAccountModalState extends State<AddAccountModal> {
+  String _accountType = "AMBROSIA";
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +53,37 @@ class AddAccountModal extends StatelessWidget {
             ),
             TextFormField(
               decoration: const InputDecoration(label: Text("Último nome")),
+            ),
+            const SizedBox(height: 16),
+            const Text("Tipo da conta"),
+            DropdownButton<String>(
+              value: _accountType,
+              isExpanded: true,
+              items: const [
+                DropdownMenuItem(
+                  value: "AMBROSIA",
+                  child: Text("Ambrosia"),
+                ),
+                DropdownMenuItem(
+                  value: "CANJICA",
+                  child: Text("Canjica"),
+                ),
+                DropdownMenuItem(
+                  value: "PUDIM",
+                  child: Text("Pudim"),
+                ),
+                DropdownMenuItem(
+                  value: "BRIGADEIRO",
+                  child: Text("Brigadeiro"),
+                ),
+              ],
+              onChanged: (valor) {
+                if (valor != null) {
+                  setState(() {
+                    _accountType = valor;
+                  });
+                }
+              },
             ),
             const SizedBox(height: 32),
             Row(
