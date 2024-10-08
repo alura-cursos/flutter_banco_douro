@@ -17,6 +17,8 @@ class _AddAccountModalState extends State<AddAccountModal> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -98,9 +100,11 @@ class _AddAccountModalState extends State<AddAccountModal> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
-                      onButtonCancelClicked();
-                    },
+                    onPressed: (isLoading)
+                        ? null
+                        : () {
+                            onButtonCancelClicked();
+                          },
                     child: const Text(
                       "Cancelar",
                       style: TextStyle(color: Colors.black),
@@ -116,10 +120,12 @@ class _AddAccountModalState extends State<AddAccountModal> {
                     style: const ButtonStyle(
                       backgroundColor: WidgetStatePropertyAll(AppColor.orange),
                     ),
-                    child: const Text(
-                      "Adicionar",
-                      style: TextStyle(color: Colors.black),
-                    ),
+                    child: (isLoading)
+                        ? const CircularProgressIndicator()
+                        : const Text(
+                            "Adicionar",
+                            style: TextStyle(color: Colors.black),
+                          ),
                   ),
                 ),
               ],
@@ -131,21 +137,35 @@ class _AddAccountModalState extends State<AddAccountModal> {
   }
 
   onButtonCancelClicked() {
-    Navigator.pop(context);
+    if (!isLoading) {
+      Navigator.pop(context);
+    }
   }
 
-  onButtonSendClicked() {
-    String name = _nameController.text;
-    String lastName = _lastNameController.text;
+  onButtonSendClicked() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
 
-    Account account = Account(
-      id: const Uuid().v1(),
-      name: name,
-      lastName: lastName,
-      balance: 0,
-      accountType: _accountType,
-    );
+      String name = _nameController.text;
+      String lastName = _lastNameController.text;
 
-    AccountService().addAccount(account);
+      Account account = Account(
+        id: const Uuid().v1(),
+        name: name,
+        lastName: lastName,
+        balance: 0,
+        accountType: _accountType,
+      );
+
+      await AccountService().addAccount(account);
+
+      closeModal();
+    }
+  }
+
+  closeModal() {
+    Navigator.pop(context);
   }
 }
