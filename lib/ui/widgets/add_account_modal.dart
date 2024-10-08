@@ -34,6 +34,25 @@ class AddAccountModal extends StatelessWidget {
               fontSize: 14,
             ),
           ),
+          TextFormField(),
+          TextFormField(),
+          const SizedBox(height: 32),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Cancelar"),
+                ),
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Adicionar"),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
